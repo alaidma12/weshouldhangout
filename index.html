@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Make It Real</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: transparent;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 16px;
+    min-height: 100vh;
+  }
+
+  .card {
+    background: #F7FAF6;
+    border: 1.5px solid #D4E0D0;
+    border-radius: 16px;
+    padding: 28px 32px;
+    width: 100%;
+    max-width: 640px;
+  }
+
+  .label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #5A7A54;
+    margin-bottom: 12px;
+  }
+
+  .prompt {
+    font-size: 1rem;
+    color: #1E2B1E;
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+
+  .field {
+    margin-bottom: 16px;
+  }
+
+  .field-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #1E2B1E;
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .field-label span {
+    color: #5A7A54;
+  }
+
+  textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1.5px solid #D4E0D0;
+    border-radius: 10px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.95rem;
+    color: #1E2B1E;
+    background: white;
+    resize: none;
+    line-height: 1.5;
+    transition: border-color 0.2s;
+    height: 72px;
+  }
+
+  textarea:focus {
+    outline: none;
+    border-color: #5A7A54;
+  }
+
+  textarea::placeholder {
+    color: #9AB096;
+    font-style: italic;
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 4px 0 16px;
+    color: #C4673A;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .divider::before,
+  .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #D4E0D0;
+  }
+
+  .save-btn {
+    width: 100%;
+    padding: 14px;
+    background: #C4673A;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: background 0.2s;
+  }
+
+  .save-btn:hover {
+    background: #A8522E;
+  }
+
+  .save-btn:focus {
+    outline: 3px solid #C4673A;
+    outline-offset: 2px;
+  }
+
+  .confirmation {
+    display: none;
+    margin-top: 20px;
+    background: #E2EDE0;
+    border: 1.5px solid #B8CDB4;
+    border-radius: 10px;
+    padding: 16px 20px;
+  }
+
+  .confirmation.visible {
+    display: block;
+  }
+
+  .confirmation-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #5A7A54;
+    margin-bottom: 8px;
+  }
+
+  .confirmation-text {
+    font-size: 0.95rem;
+    color: #1E2B1E;
+    line-height: 1.6;
+  }
+
+  .confirmation-text strong {
+    color: #C4673A;
+  }
+
+  .footnote {
+    font-size: 0.78rem;
+    color: #7A9476;
+    font-style: italic;
+    margin-top: 14px;
+    text-align: center;
+  }
+
+  .copy-btn {
+    display: none;
+    width: 100%;
+    padding: 12px;
+    background: white;
+    color: #5A7A54;
+    border: 1.5px solid #5A7A54;
+    border-radius: 10px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: all 0.2s;
+  }
+
+  .copy-btn:hover {
+    background: #E2EDE0;
+  }
+
+  .copy-btn.visible {
+    display: block;
+  }
+
+  .copy-btn.copied {
+    color: white;
+    background: #5A7A54;
+    border-color: #5A7A54;
+  }
+
+
+    display: none;
+    background: none;
+    border: none;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.82rem;
+    color: #5A7A54;
+    cursor: pointer;
+    text-decoration: underline;
+    margin-top: 10px;
+    padding: 0;
+  }
+
+  .reset-btn.visible {
+    display: block;
+  }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="label">Make It Real</div>
+  <p class="prompt">Think of one plan you've been meaning to make. Write your if-then statement below.</p>
+
+  <div class="field">
+    <label class="field-label" for="if-input"><span>If</span> — when will this happen?</label>
+    <textarea id="if-input" placeholder="e.g. it's Saturday morning and I'm having my coffee..."></textarea>
+  </div>
+
+  <div class="divider">then</div>
+
+  <div class="field">
+    <label class="field-label" for="will-input"><span>I will</span> — what will you do?</label>
+    <textarea id="will-input" placeholder="e.g. I'll send Jamie a message to check in..."></textarea>
+  </div>
+
+  <button class="save-btn" onclick="saveplan()">Lock It In</button>
+
+  <div class="confirmation" id="confirmation">
+    <div class="confirmation-label">Your plan</div>
+    <div class="confirmation-text" id="confirmation-text"></div>
+  </div>
+
+  <button class="copy-btn" id="copy-btn" onclick="copyplan()">Copy my plan</button>
+
+  <button class="reset-btn" id="reset-btn" onclick="resetplan()">Start over</button>
+
+  <p class="footnote">This is just for you — nothing is submitted or saved.</p>
+</div>
+
+<script>
+  function saveplan() {
+    const ifText = document.getElementById('if-input').value.trim();
+    const willText = document.getElementById('will-input').value.trim();
+
+    if (!ifText || !willText) {
+      alert('Fill in both fields to lock in your plan.');
+      return;
+    }
+
+    const confirmationText = document.getElementById('confirmation-text');
+    confirmationText.innerHTML = `<strong>If</strong> ${ifText}, <strong>I will</strong> ${willText}.`;
+
+    document.getElementById('confirmation').classList.add('visible');
+    document.getElementById('reset-btn').classList.add('visible');
+    document.getElementById('copy-btn').classList.add('visible');
+    document.querySelector('.save-btn').textContent = 'Plan locked ✓';
+    document.querySelector('.save-btn').style.background = '#5A7A54';
+  }
+
+  function copyplan() {
+    const ifText = document.getElementById('if-input').value.trim();
+    const willText = document.getElementById('will-input').value.trim();
+    const text = `If ${ifText}, I will ${willText}.`;
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = document.getElementById('copy-btn');
+      btn.textContent = 'Copied ✓';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = 'Copy my plan';
+        btn.classList.remove('copied');
+      }, 2000);
+    });
+  }
+
+  function resetplan() {
+    document.getElementById('if-input').value = '';
+    document.getElementById('will-input').value = '';
+    document.getElementById('confirmation').classList.remove('visible');
+    document.getElementById('reset-btn').classList.remove('visible');
+    document.getElementById('copy-btn').classList.remove('visible');
+    document.querySelector('.save-btn').textContent = 'Lock It In';
+    document.querySelector('.save-btn').style.background = '#C4673A';
+  }
+</script>
+
+</body>
+</html>
