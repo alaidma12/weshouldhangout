@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>By the Numbers - Chapter 2 Sample</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Fraunces:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: white;
+    color: #1E2B1E;
+    padding: 40px 24px;
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .context-note {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #A8C4A2;
+    margin-bottom: 32px;
+  }
+
+  /* Simulated accordion end */
+  .accordion-end {
+    border: 1.5px solid #D4E0D0;
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 32px;
+    background: #F7FAF6;
+    font-size: 0.88rem;
+    color: #4A5E48;
+    font-style: italic;
+  }
+
+  /* By the numbers section */
+  .by-the-numbers {
+    margin-bottom: 8px;
+  }
+
+  .section-heading {
+    font-family: 'Fraunces', serif;
+    font-size: 1.15rem;
+    color: #1E2B1E;
+    margin-bottom: 6px;
+  }
+
+  .section-intro {
+    font-size: 0.88rem;
+    color: #4A5E48;
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+
+  /* Stat cards */
+  .stat-card {
+    background: #F7FAF6;
+    border: 1.5px solid #D4E0D0;
+    border-radius: 12px;
+    padding: 22px 24px;
+    margin-bottom: 12px;
+  }
+
+  .stat-number {
+    font-family: 'Fraunces', serif;
+    font-size: 2.4rem;
+    color: #C4673A;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .stat-label {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: #1E2B1E;
+    line-height: 1.5;
+    margin-bottom: 4px;
+  }
+
+  .stat-context {
+    font-size: 0.82rem;
+    color: #4A5E48;
+    line-height: 1.55;
+  }
+
+  /* Citation block */
+  .citation-block {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    background: white;
+    border: 1.5px solid #D4E0D0;
+    border-radius: 0 0 10px 10px;
+    border-top: none;
+    padding: 12px 16px;
+    margin-top: -2px;
+    margin-bottom: 24px;
+  }
+
+  .citation-icon {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    background: #E2EDE0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1px;
+  }
+
+  .citation-icon svg {
+    width: 12px;
+    height: 12px;
+    stroke: #5A7A54;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .citation-text {
+    font-size: 0.75rem;
+    line-height: 1.6;
+    color: #4A5E48;
+  }
+
+  .citation-text strong {
+    color: #1E2B1E;
+    font-weight: 600;
+  }
+
+  .transition-text {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: #1E2B1E;
+    margin-top: 8px;
+  }
+</style>
+</head>
+<body>
+
+  <!-- By the numbers section -->
+  <div class="by-the-numbers">
+    <h2 class="section-heading">By the numbers</h2>
+    <p class="section-intro">These aren't rare patterns. The research is consistent across cultures, ages, and contexts.</p>
+
+    <!-- Stat 1 -->
+    <div class="stat-card">
+      <div class="stat-number">30%</div>
+      <div class="stat-label">Only 30% of people finished a task on the day they predicted — even when the task was familiar.</div>
+      <div class="stat-context">The other 70% were confident, wrong, and surprised. That's the Planning Fallacy at work.</div>
+    </div>
+    <div class="citation-block">
+      <div class="citation-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+      </div>
+      <div class="citation-text">
+        <strong>Source:</strong> Buehler, R., Griffin, D., & Ross, M. (1994). Exploring the "planning fallacy": Why people underestimate their task completion times. <em>Journal of Personality and Social Psychology, 67</em>, 366–381.
+      </div>
+    </div>
+
+    <!-- Stat 2 -->
+    <div class="stat-card">
+      <div class="stat-number">80%</div>
+      <div class="stat-label">About 80% of people display optimism bias — across different ages, genders, and cultures worldwide.</div>
+      <div class="stat-context">Most of them have no idea they have it. Which, arguably, is the whole point.</div>
+    </div>
+    <div class="citation-block">
+      <div class="citation-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+      </div>
+      <div class="citation-text">
+        <strong>Source:</strong> Sharot, T. (2011). <em>The Optimism Bias: A Tour of the Irrationally Positive Brain.</em> Pantheon Books. See also: Sharot, T. (2012). The optimism bias. TED2012. ted.com/talks/tali_sharot_the_optimism_bias
+      </div>
+    </div>
+  </div>
+
+
+</body>
+</html>
