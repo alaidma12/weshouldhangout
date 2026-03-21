@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Which do you lean toward?</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Fraunces:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: transparent;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .quiz {
+    background: #F7FAF6;
+    border: 1.5px solid #D4E0D0;
+    border-radius: 16px;
+    padding: 28px 32px;
+    width: 100%;
+    max-width: 640px;
+  }
+
+  .quiz-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #C4673A;
+    margin-bottom: 8px;
+  }
+
+  .quiz-title {
+    font-family: 'Fraunces', serif;
+    font-size: 1.2rem;
+    color: #1E2B1E;
+    margin-bottom: 8px;
+  }
+
+  .quiz-subtitle {
+    font-size: 0.88rem;
+    color: #4A5E48;
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }
+
+  .divider {
+    height: 1px;
+    background: #D4E0D0;
+    margin: 0 0 24px;
+  }
+
+  .progress-wrap {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 24px;
+  }
+
+  .progress-dot {
+    flex: 1;
+    height: 4px;
+    background: #D4E0D0;
+    border-radius: 4px;
+    transition: background 0.3s;
+  }
+
+  .progress-dot.active {
+    background: #C4673A;
+  }
+
+  .question-block {
+    display: none;
+  }
+
+  .question-block.active {
+    display: block;
+  }
+
+  .question-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+
+  .question-counter {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #5A7A54;
+  }
+
+  .back-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #5A7A54;
+    padding: 4px 0;
+    transition: color 0.15s;
+  }
+
+  .back-btn:hover {
+    color: #1E2B1E;
+  }
+
+  .back-btn svg {
+    width: 13px;
+    height: 13px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .back-btn:focus {
+    outline: 2px solid #5A7A54;
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  .question-text {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1E2B1E;
+    line-height: 1.55;
+    margin-bottom: 18px;
+    margin-top: 10px;
+  }
+
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .option {
+    padding: 14px 18px;
+    background: white;
+    border: 1.5px solid #D4E0D0;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.9rem;
+    color: #1E2B1E;
+    line-height: 1.5;
+    transition: all 0.15s;
+    text-align: left;
+    width: 100%;
+  }
+
+  .option:hover {
+    border-color: #C4673A;
+    background: #FDF5F0;
+  }
+
+  .option:focus {
+    outline: 3px solid #C4673A;
+    outline-offset: 2px;
+  }
+
+  /* Result */
+  .result {
+    display: none;
+  }
+
+  .result.visible {
+    display: block;
+  }
+
+  .result-badge {
+    display: inline-block;
+    background: #C4673A;
+    color: white;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+  }
+
+  .result-type {
+    font-family: 'Fraunces', serif;
+    font-size: 1.5rem;
+    color: #1E2B1E;
+    margin-bottom: 16px;
+    line-height: 1.2;
+  }
+
+  .result-description {
+    font-size: 0.92rem;
+    color: #4A5E48;
+    line-height: 1.7;
+    margin-bottom: 16px;
+    background: white;
+    border: 1.5px solid #D4E0D0;
+    border-radius: 10px;
+    padding: 16px 20px;
+  }
+
+  .result-nudge {
+    background: #E2EDE0;
+    border-left: 3px solid #5A7A54;
+    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+    font-size: 0.85rem;
+    color: #1E2B1E;
+    line-height: 1.6;
+    font-style: italic;
+    margin-bottom: 20px;
+  }
+
+  .retry-btn {
+    background: none;
+    border: 1.5px solid #5A7A54;
+    color: #5A7A54;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 10px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .retry-btn:hover {
+    background: #E2EDE0;
+  }
+</style>
+</head>
+<body>
+
+<div class="quiz">
+  <div class="quiz-label">Quick check</div>
+  <div class="quiz-title">Which one do you lean toward?</div>
+  <p class="quiz-subtitle">You've met all three. Four questions about your actual behavior — not who you think you are. Be honest.</p>
+  <div class="divider"></div>
+
+  <div class="progress-wrap">
+    <div class="progress-dot" id="dot1"></div>
+    <div class="progress-dot" id="dot2"></div>
+    <div class="progress-dot" id="dot3"></div>
+    <div class="progress-dot" id="dot4"></div>
+  </div>
+
+  <!-- Q1 -->
+  <div class="question-block active" id="q1">
+    <div class="question-nav">
+      <div class="question-counter">Question 1 of 4</div>
+    </div>
+    <div class="question-text">It's Sunday. Someone sends a message asking about getting together next weekend. What actually happens?</div>
+    <div class="options">
+      <button class="option" onclick="answer(1, 'scheduler')">I check the calendar, suggest two specific time slots, and follow up if I don't hear back.</button>
+      <button class="option" onclick="answer(1, 'middle')">I respond saying it sounds good and wait to see what everyone else says.</button>
+      <button class="option" onclick="answer(1, 'couch')">I read it, feel genuinely happy about the idea, and forget to respond until Tuesday.</button>
+    </div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="question-block" id="q2">
+    <div class="question-nav">
+      <div class="question-counter">Question 2 of 4</div>
+      <button class="back-btn" onclick="goBack(2)" aria-label="Go back to previous question">
+        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+        Back
+      </button>
+    </div>
+    <div class="question-text">A friend mentions they've been going through something hard. What do you actually do?</div>
+    <div class="options">
+      <button class="option" onclick="answer(2, 'scheduler')">I reach out that day — text, call, or suggest a time to talk.</button>
+      <button class="option" onclick="answer(2, 'middle')">I mean to reach out. I think about them a lot. I get there eventually.</button>
+      <button class="option" onclick="answer(2, 'couch')">I think about them constantly and draft messages in my head. Sending them is another story.</button>
+    </div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="question-block" id="q3">
+    <div class="question-nav">
+      <div class="question-counter">Question 3 of 4</div>
+      <button class="back-btn" onclick="goBack(3)" aria-label="Go back to previous question">
+        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+        Back
+      </button>
+    </div>
+    <div class="question-text">The group chat has been quiet for two months. What's your role in that silence?</div>
+    <div class="options">
+      <button class="option" onclick="answer(3, 'scheduler')">I'm probably the one who eventually breaks it with a specific plan or idea.</button>
+      <button class="option" onclick="answer(3, 'middle')">I notice it but figure someone else will say something first.</button>
+      <button class="option" onclick="answer(3, 'couch')">I've thought about sending something at least twelve times. The chat remains quiet.</button>
+    </div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="question-block" id="q4">
+    <div class="question-nav">
+      <div class="question-counter">Question 4 of 4</div>
+      <button class="back-btn" onclick="goBack(4)" aria-label="Go back to previous question">
+        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+        Back
+      </button>
+    </div>
+    <div class="question-text">You just had a really good time with friends. What happens next?</div>
+    <div class="options">
+      <button class="option" onclick="answer(4, 'scheduler')">I'm already thinking about when we can do it again and I'll probably say something.</button>
+      <button class="option" onclick="answer(4, 'middle')">I leave feeling happy but it doesn't occur to me to initiate the next one.</button>
+      <button class="option" onclick="answer(4, 'couch')">I feel great about it for days and then somehow six months pass.</button>
+    </div>
+  </div>
+
+  <!-- Result -->
+  <div class="result" id="result">
+    <div class="result-badge">You lean toward</div>
+    <div class="result-type" id="result-type"></div>
+    <div class="result-description" id="result-desc"></div>
+    <div class="result-nudge" id="result-nudge"></div>
+    <button class="retry-btn" onclick="restart()">Try again</button>
+  </div>
+</div>
+
+<script>
+  // Track each answer by question number so we can undo on back
+  const answers = { 1: null, 2: null, 3: null, 4: null };
+  const scores = { scheduler: 0, middle: 0, couch: 0 };
+  let current = 1;
+
+  function answer(q, type) {
+    // Save the answer and update score
+    answers[q] = type;
+    scores[type]++;
+
+    // Fill progress dot
+    document.getElementById('dot' + q).classList.add('active');
+
+    // Advance
+    current++;
+    if (current <= 4) {
+      document.getElementById('q' + (current - 1)).classList.remove('active');
+      document.getElementById('q' + current).classList.add('active');
+    } else {
+      document.getElementById('q4').classList.remove('active');
+      showResult();
+    }
+  }
+
+  function goBack(fromQ) {
+    const prevQ = fromQ - 1;
+
+    // Undo the previous question's score if it was answered
+    if (answers[prevQ] !== null) {
+      scores[answers[prevQ]]--;
+      answers[prevQ] = null;
+    }
+
+    // Unfill the progress dot for the question we're going back to
+    document.getElementById('dot' + prevQ).classList.remove('active');
+
+    // Navigate back
+    document.getElementById('q' + fromQ).classList.remove('active');
+    document.getElementById('q' + prevQ).classList.add('active');
+    current = prevQ;
+  }
+
+  function showResult() {
+    const result = document.getElementById('result');
+    result.classList.add('visible');
+
+    const winner = Object.keys(scores).reduce((a, b) => scores[a] >= scores[b] ? a : b);
+
+    const types = {
+      scheduler: {
+        name: 'The Scheduler',
+        desc: "You're the reason plans actually happen. You notice what people enjoy, you follow through, and you carry more of the logistical weight than most people realize. That's a real gift — and it can also be exhausting when it's not reciprocated.",
+        nudge: "The concepts ahead will still matter to you — especially the part about making plans honest about what you're actually working with, not what you wish you had capacity for."
+      },
+      middle: {
+        name: 'Somewhere in the Middle',
+        desc: "You show up reliably when someone else gets things moving. You're not avoidant — you just default to following rather than leading. Most of your group has no idea you'd step up more if someone simply asked.",
+        nudge: "The Intention-Action Gap is going to feel very familiar. So will the fix — it's smaller than you think."
+      },
+      couch: {
+        name: 'You Have to Drag Me Out',
+        desc: "You think about your people more than they know. The gap between genuinely caring and actually reaching out is real for you — and it has nothing to do with how much you love them. You almost always have a great time once you're there.",
+        nudge: "Temporal Discounting explains a lot of your experience. The good news — a small plan is still a plan."
+      }
+    };
+
+    const t = types[winner];
+    document.getElementById('result-type').textContent = t.name;
+    document.getElementById('result-desc').textContent = t.desc;
+    document.getElementById('result-nudge').textContent = t.nudge;
+  }
+
+  function restart() {
+    scores.scheduler = 0; scores.middle = 0; scores.couch = 0;
+    answers[1] = null; answers[2] = null; answers[3] = null; answers[4] = null;
+    current = 1;
+    document.getElementById('result').classList.remove('visible');
+    document.querySelectorAll('.question-block').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.progress-dot').forEach(d => d.classList.remove('active'));
+    document.getElementById('q1').classList.add('active');
+  }
+</script>
+
+</body>
+</html>
